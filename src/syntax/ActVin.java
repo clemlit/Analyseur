@@ -17,13 +17,13 @@ public class ActVin extends AutoVin {
     /** table des actions */
     private final int[][] ACTION =
     {/* Etat        BJ    BG   IDENT  NBENT VIRG PTVIRG BARRE AUTRES  */
-	/* 0 */      { -1,   -1,    1,    -1,   -1,   -1,    9,   -1   },
-	/* 1 */      {  3,    2,    4,     8,   -1,   -1,   -1,   -1   },
-	/* 2 */      {  3,    2,    4,    -1,   -1,   -1,   -1,   -1   },
-	/* 3 */      { -1,   -1,    4,    -1,   -1,   -1,   -1,   -1   },
-	/* 4 */      { -1,   -1,   -1,     5,   -1,   -1,   -1,   -1   },
-	/* 5 */      { -1,   -1,    5,    -1,    7,    6,   -1,   -1   },
-	// /* 6 */      {  3,    2,    4,     8,   -1,   -1,   -1,   -1   },
+	/* 0 */      { 10,   10,    1,    10,   10,   10,    9,   10   },
+	/* 1 */      {  3,    2,    4,     8,   10,   10,   10,   10   },
+	/* 2 */      {  3,    2,    4,    10,   10,   10,   10,   10   },
+	/* 3 */      { 10,   10,    4,    10,   10,   10,   10,   10   },
+	/* 4 */      { 10,   10,   10,     5,   10,   10,   10,   10   },
+	/* 5 */      { 10,   10,    5,    10,    7,    6,   10,   10   },
+	/* 6 */      {  3,    2,    4,     8,   10,   10,   10,   10   },
 	/*!!! TODO !!!*/
 	/* Rappel conventions :  action -1 = action vide, pas de ligne pour etatFinal */
     } ;	       
@@ -144,6 +144,7 @@ public class ActVin extends AutoVin {
 	private int indChauf ;
 	private int indMagasin;
 	private String qualite = new String();
+	private int quantite;
 	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
 
 	
@@ -154,6 +155,7 @@ public class ActVin extends AutoVin {
 		indChauf = -1;
 		indMagasin = -1;
 		qualite ="";
+		quantite = -1;
 		/*!!! TODO : A COMPLETER SI BESOIN !!!*/
 	} 
 	
@@ -173,6 +175,8 @@ public class ActVin extends AutoVin {
 		case 3 : if(numIdCourant()==0) {qualite = "BEAUJ"; break;}
 			else {qualite = "ORD";} break;
 		case 4 : indMagasin = valEnt(); break;
+		case 5 : quantite = valEnt(); break;
+		case 6 : break;
 		default:
 			Lecture.attenteSurLecture("action " + numAct + " non prevue");
 		}

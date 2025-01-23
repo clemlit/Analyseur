@@ -8,7 +8,8 @@ import lex.*;
  * La classe AutoVin met en oeuvre l'automate d'analyse syntaxique de distribution de vin
  * Realisation par interpreteur de tables
  * 
- * @author ?? MERCI DE PRECISER LE NOM DU TRINOME ?? TODO
+ * @author Trinome 5, Groupe 3 : MESSAGER Clément, MOUTALABI Adebayo Habib, LEPORT Etel
+ * 
  * janvier 2025
  * 
  */

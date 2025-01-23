@@ -8,7 +8,7 @@ import lex.*;
 * La classe ActVin met en oeuvre les actions de l'automate d'analyse syntaxique de l'application Vin
 *  des fiches de livraison de vin
 * 
-* @author ?? MERCI DE PRECISER LE NOM DU TRINOME ?? TODO
+* @author Trinome 5, Groupe 3 : MESSAGER Clément, MOUTALABI Adebayo Habib, LEPORT Etel
 * 
 * janvier 2025
 */
@@ -17,8 +17,13 @@ public class ActVin extends AutoVin {
     /** table des actions */
     private final int[][] ACTION =
     {/* Etat        BJ    BG   IDENT  NBENT VIRG PTVIRG BARRE AUTRES  */
-	/* 0 */      { -1,   -1,   -1,    -1,   -1,   -1,   -1,   -1   },
-	/* 1 */      { -1,   -1,   -1,    -1,   -1,   -1,   -1,   -1   },
+	/* 0 */      { -1,   -1,    1,    -1,   -1,   -1,    9,   -1   },
+	/* 1 */      {  3,    2,    4,     8,   -1,   -1,   -1,   -1   },
+	/* 2 */      {  3,    2,    4,    -1,   -1,   -1,   -1,   -1   },
+	/* 3 */      { -1,   -1,    4,    -1,   -1,   -1,   -1,   -1   },
+	/* 4 */      { -1,   -1,   -1,     5,   -1,   -1,   -1,   -1   },
+	/* 5 */      { -1,   -1,    5,    -1,    7,    6,   -1,   -1   },
+	// /* 6 */      {  3,    2,    4,     8,   -1,   -1,   -1,   -1   },
 	/*!!! TODO !!!*/
 	/* Rappel conventions :  action -1 = action vide, pas de ligne pour etatFinal */
     } ;	       

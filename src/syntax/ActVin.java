@@ -149,6 +149,7 @@ public class ActVin extends AutoVin {
 	private int quantite;
 	private int volume;
 	private int i;
+	private int nbmag;
 	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
 
 	
@@ -162,6 +163,7 @@ public class ActVin extends AutoVin {
 		quantite = -1;
 		i =0;
 		volume =100;
+		nbmag = 0;
 		/*!!! TODO : A COMPLETER SI BESOIN !!!*/
 	} 
 	
@@ -182,10 +184,10 @@ public class ActVin extends AutoVin {
 			else {tabChauf[i].bj += quantite;} break;
 		case 4 : indMagasin = numIdCourant(); break;
 		case 5 : quantite = valEnt(); break;
-		case 6 :  break;
-		case 7 : tabChauf[i].magDif.add(indMagasin); i++; break;
+		case 6 : /* gérer le stockage dans tabChauf[] */ break;
+		case 7 : nbmag += 1; /* il faut le stocker dans un variable intermediaire et pas le stocké directement*/ i++; break;
 		case 8 : if (100<=volume && volume<=200) { volume = valEnt(); break;}
-			else { erreur(1, "Le volume de la citerne doit être entre 100 et 200"); break;}
+			else { erreur(1, "Le volume de la citerne doit être entre 100 et 200");/* ne pas oublier de reset les variables intermédiaires */ break;}
 		case 9 : afficherChauf(); break;
 		default:
 			Lecture.attenteSurLecture("action " + numAct + " non prevue");

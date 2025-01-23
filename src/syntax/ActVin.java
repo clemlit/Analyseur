@@ -142,6 +142,7 @@ public class ActVin extends AutoVin {
 	
 	/** indice courant du nombre de chauffeurs dans le tableau tabChauf */
 	private int indChauf ;
+	private int indMagasin;
 	private String qualite = new String();
 	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
 
@@ -151,6 +152,8 @@ public class ActVin extends AutoVin {
 	 */
 	private void initialisations() {
 		indChauf = -1;
+		indMagasin = -1;
+		qualite ="";
 		/*!!! TODO : A COMPLETER SI BESOIN !!!*/
 	} 
 	
@@ -169,6 +172,7 @@ public class ActVin extends AutoVin {
 			else {qualite = "ORD";} break;
 		case 3 : if(numIdCourant()==0) {qualite = "BEAUJ"; break;}
 			else {qualite = "ORD";} break;
+		case 4 : indMagasin = valEnt(); break;
 		default:
 			Lecture.attenteSurLecture("action " + numAct + " non prevue");
 		}

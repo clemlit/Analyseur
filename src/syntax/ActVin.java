@@ -165,8 +165,10 @@ public class ActVin extends AutoVin {
 		case -1:	// action vide
 			break;
 		case 1 : indChauf = valEnt(); break;
-		case 2 : if(numIdCourant()==1) {qualite = "BOURG";}
-			else {qualite = "ORD";}
+		case 2 : if(numIdCourant()==1) {qualite = "BOURG"; break;}
+			else {qualite = "ORD";} break;
+		case 3 : if(numIdCourant()==0) {qualite = "BEAUJ"; break;}
+			else {qualite = "ORD";} break;
 		default:
 			Lecture.attenteSurLecture("action " + numAct + " non prevue");
 		}

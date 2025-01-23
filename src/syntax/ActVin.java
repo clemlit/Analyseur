@@ -163,7 +163,8 @@ public class ActVin extends AutoVin {
 		switch (numAct) {
 		case -1:	// action vide
 			break;
-		/*!!! TODO !!!*/
+		case 1 : indChauf = valEnt(); break;
+		case 2 : break;
 		default:
 			Lecture.attenteSurLecture("action " + numAct + " non prevue");
 		}

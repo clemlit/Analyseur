@@ -1,6 +1,8 @@
 package syntax;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+
 import utils.*;
 import lex.*;
 
@@ -145,6 +147,8 @@ public class ActVin extends AutoVin {
 	private int indMagasin;
 	private String qualite = new String();
 	private int quantite;
+	private int volume;
+	private int i;
 	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
 
 	
@@ -156,6 +160,8 @@ public class ActVin extends AutoVin {
 		indMagasin = -1;
 		qualite ="";
 		quantite = -1;
+		i =0;
+		volume =100;
 		/*!!! TODO : A COMPLETER SI BESOIN !!!*/
 	} 
 	
@@ -169,14 +175,18 @@ public class ActVin extends AutoVin {
 		switch (numAct) {
 		case -1:	// action vide
 			break;
-		case 1 : indChauf = valEnt(); break;
-		case 2 : if(numIdCourant()==1) {qualite = "BOURG"; break;}
-			else {qualite = "ORD";} break;
-		case 3 : if(numIdCourant()==0) {qualite = "BEAUJ"; break;}
-			else {qualite = "ORD";} break;
-		case 4 : indMagasin = valEnt(); break;
+		case 1 : indChauf = numIdCourant(); break;
+		case 2 : if(numIdCourant()==1) {tabChauf[i].bg += quantite; break;}
+			else {qualite += quantite;} break;
+		case 3 : if(numIdCourant()==0) {tabChauf[i].bj += quantite; break;}
+			else {tabChauf[i].bj += quantite;} break;
+		case 4 : indMagasin = numIdCourant(); break;
 		case 5 : quantite = valEnt(); break;
-		case 6 : break;
+		case 6 :  break;
+		case 7 : tabChauf[i].magDif.add(indMagasin); i++; break;
+		case 8 : if (100<=volume && volume<=200) { volume = valEnt(); break;}
+			else { erreur(1, "Le volume de la citerne doit être entre 100 et 200"); break;}
+		case 9 : afficherChauf(); break;
 		default:
 			Lecture.attenteSurLecture("action " + numAct + " non prevue");
 		}

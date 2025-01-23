@@ -22,13 +22,13 @@ public class AutoVin extends Automate{
 	/** table des transitions */
 	private final int[][] TRANSIT =
 		{/* Etat        BJ    BG   IDENT  NBENT VIRG PTVIRG BARRE AUTRES  */
-	 	/* 0 */      {  7,   7,    1,     7,  	7,   7,   	6,    7   },
-	 	/* 1 */      {  3,   3,    4,     2,   	7,   7,   	7,    7   },
-	 	/* 2 */      {  3,   3,    4,     7,  	7,   7,   	7,    7   },
-	 	/* 3 */      {  7,   7,    4,     7,   	7,   7,   	7,    7   },
-	 	/* 4 */      {  7,   7,    7,     5,   	7,   7,   	7,    7   },
-	 	/* 5 */      {  7,   7,    4,     7,   	2,   0,   	7,    7   },
-	 	/* 6 */      {  7,   7,    7,     7,   	7,   7,   	7,    7   },
+	 	/* 0 */      {  6,   6,    1,     6,  	6,   0,   	7,    6   },
+	 	/* 1 */      {  3,   3,    4,     2,   	6,   0,   	7,    6   },
+	 	/* 2 */      {  3,   3,    4,     6,  	6,   0,   	7,    6   },
+	 	/* 3 */      {  6,   6,    4,     6,   	6,   0,   	7,    6   },
+	 	/* 4 */      {  6,   6,    6,     5,   	6,   0,   	7,    6   },
+	 	/* 5 */      {  6,   6,    4,     6,   	2,   0,   	7,    6   },
+	 	/* 6 */      {  6,   6,    6,     6,   	6,   0,   	7,    6   },
 	 	/* TODO : a modifier et completer pour ne pas boucler sur l'etat 0 */ 
 	 	/* Rappel conventions :  etatErreur = TRANSIT.length - 1 et pas de ligne pour etatFinal */
     } ;

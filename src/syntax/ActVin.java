@@ -142,6 +142,7 @@ public class ActVin extends AutoVin {
 	
 	/** indice courant du nombre de chauffeurs dans le tableau tabChauf */
 	private int indChauf ;
+	private String qualite = new String();
 	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
 
 	
@@ -164,7 +165,8 @@ public class ActVin extends AutoVin {
 		case -1:	// action vide
 			break;
 		case 1 : indChauf = valEnt(); break;
-		case 2 : break;
+		case 2 : if(numIdCourant()==1) {qualite = "BOURG";}
+			else {qualite = "ORD";}
 		default:
 			Lecture.attenteSurLecture("action " + numAct + " non prevue");
 		}

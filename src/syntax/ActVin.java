@@ -1,7 +1,7 @@
 package syntax;
 
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.TreeSet;
 
 import utils.*;
 import lex.*;
@@ -145,7 +145,9 @@ public class ActVin extends AutoVin {
 	/** indice courant du nombre de chauffeurs dans le tableau tabChauf */
 	private int indChauf ;
 	private int indMagasin;
-	private String qualite = new String();
+	private int bj;
+	private int bg;
+	private int ordin;
 	private int quantite;
 	private int volume;
 	private int i;
@@ -159,7 +161,9 @@ public class ActVin extends AutoVin {
 	private void initialisations() {
 		indChauf = -1;
 		indMagasin = -1;
-		qualite ="";
+		bj = 0;
+		bg = 0;
+		ordin = 0;
 		quantite = -1;
 		i =0;
 		volume =100;
@@ -173,25 +177,69 @@ public class ActVin extends AutoVin {
 	 * @param numact numero de l'action a executer
 	 */
 	public void executer(int numAct) {
-
-		switch (numAct) {
-		case -1:	// action vide
-			break;
-		case 1 : indChauf = numIdCourant(); break;
-		case 2 : if(numIdCourant()==1) {tabChauf[i].bg += quantite; break;}
-			else {qualite += quantite;} break;
-		case 3 : if(numIdCourant()==0) {tabChauf[i].bj += quantite; break;}
-			else {tabChauf[i].bj += quantite;} break;
-		case 4 : indMagasin = numIdCourant(); break;
-		case 5 : quantite = valEnt(); break;
-		case 6 : /* gérer le stockage dans tabChauf[] */ break;
-		case 7 : nbmag += 1; /* il faut le stocker dans un variable intermediaire et pas le stocké directement*/ i++; break;
-		case 8 : if (100<=volume && volume<=200) { volume = valEnt(); break;}
-			else { erreur(1, "Le volume de la citerne doit être entre 100 et 200");/* ne pas oublier de reset les variables intermédiaires */ break;}
-		case 9 : afficherChauf(); break;
-		default:
-			Lecture.attenteSurLecture("action " + numAct + " non prevue");
-		}
+	    switch (numAct) {
+	        case -1: // Action vide
+	            break;
+	        
+	        case 1: // Associer l'identifiant du chauffeur courant
+	            indChauf = numIdCourant();
+	            break;
+	        
+	        case 2: // Mise à jour de la quantité livrée en fonction du type de vin
+	            if (numIdCourant() == 1) {
+	                bg += quantite;
+	            } else {
+	                ordin += quantite;
+	            }
+	            break;
+	        
+	        case 3: // Mise à jour du Beaujolais livré
+	            bj += quantite;
+	            break;
+	        
+	        case 4: // Associer l'identifiant du magasin courant
+	            indMagasin = numIdCourant();
+	            break;
+	        
+	        case 5: // Lire la quantité à livrer
+	            quantite = valEnt();
+	            break;
+	        
+	        case 6: // Stocker les informations dans tabChauf[] uniquement si la fiche est valide
+	            if (indChauf >= 0 && indChauf < MAXCHAUF) {
+	                if (tabChauf[indChauf] == null) {
+	                    tabChauf[indChauf] = new Chauffeur(indChauf, bj, bg, ordin, new TreeSet<>());
+	                }
+	                tabChauf[indChauf].magDif.add(indMagasin);
+	            } else {
+	                erreur(FATALE, "Indice de chauffeur hors limites");
+	            }
+	            break;
+	        
+	        case 7: // Incrémentation du nombre de magasins livrés
+	            nbmag++;
+	            i++;
+	            break;
+	        
+	        case 8: // Vérification et stockage du volume
+	            int volumeLu = valEnt();
+	            if (volumeLu >= 100 && volumeLu <= 200) {
+	                volume = volumeLu;
+	            } else {
+	                erreur(NONFATALE, "Le volume de la citerne doit être entre 100 et 200");
+	                quantite = -1; // Réinitialisation des variables intermédiaires
+	                indMagasin = -1;
+	            }
+	            break;
+	        
+	        case 9: // Affichage des informations des chauffeurs
+	            afficherChauf();
+	            break;
+	        
+	        default:
+	            erreur(NONFATALE, "Action " + numAct + " non prévue");
+	            break;
+	    }
 	} 
 
 } 

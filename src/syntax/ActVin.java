@@ -201,7 +201,11 @@ public class ActVin extends AutoVin {
 	            break;
 	        
 	        case 3: // Mise à jour du Beaujolais livré
-	            itemLivré = "BOURGOGNE";
+	        	if (numIdCourant() == 2) {
+	                itemLivré = "BOURGOGNE";
+	            } else {
+	                itemLivré = "ORDINAIRE";
+	            }
 	            break;
 	        
 	        case 4: // Associer l'identifiant du magasin courant

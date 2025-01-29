@@ -208,9 +208,16 @@ public class ActVin extends AutoVin {
 	        case 6: // Stocker les informations dans tabChauf[] uniquement si la fiche est valide
 	            if (indChauf >= 0 && indChauf < MAXCHAUF) {
 	                if (tabChauf[indChauf] == null) {
-	                    tabChauf[indChauf] = new Chauffeur(indChauf, bj, bg, ordin, new TreeSet<>());
+	                    tabChauf[indChauf] = new Chauffeur(indChauf, 0, 0, 0, new TreeSet<>());
 	                }
+	                tabChauf[indChauf].bj += bj;
+	                tabChauf[indChauf].bg += bg;
+	                tabChauf[indChauf].ordin += ordin;
 	                tabChauf[indChauf].magDif.add(indMagasin);
+	                // Réinitialisation après validation
+	                bj = 0;
+	                bg = 0;
+	                ordin = 0;
 	            } else {
 	                erreur(FATALE, "Indice de chauffeur hors limites");
 	            }

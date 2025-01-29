@@ -152,6 +152,7 @@ public class ActVin extends AutoVin {
 	private int volume;
 	private int i;
 	private int nbmag;
+	private String itemLivré;
 	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
 
 	
@@ -168,6 +169,7 @@ public class ActVin extends AutoVin {
 		i =0;
 		volume =100;
 		nbmag = 0;
+		itemLivré = "";
 		/*!!! TODO : A COMPLETER SI BESOIN !!!*/
 	} 
 	
@@ -182,19 +184,22 @@ public class ActVin extends AutoVin {
 	            break;
 	        
 	        case 1: // Associer l'identifiant du chauffeur courant
-	            indChauf = numIdCourant();
+	        	indChauf = numIdCourant();
+	        	if (tabChauf[indChauf] == null) {
+                    tabChauf[indChauf] = new Chauffeur(indChauf, 0, 0, 0, new TreeSet<>());
+                }
 	            break;
 	        
 	        case 2: // Mise à jour de la quantité livrée en fonction du type de vin
 	            if (numIdCourant() == 1) {
-	                bg += quantite;
+	                itemLivré = "BEAUJOLAIS";
 	            } else {
-	                ordin += quantite;
+	                itemLivré = "ORDINAIRE";
 	            }
 	            break;
 	        
 	        case 3: // Mise à jour du Beaujolais livré
-	            bj += quantite;
+	            itemLivré = "BOURGOGNE";
 	            break;
 	        
 	        case 4: // Associer l'identifiant du magasin courant
@@ -202,14 +207,29 @@ public class ActVin extends AutoVin {
 	            break;
 	        
 	        case 5: // Lire la quantité à livrer
-	            quantite = valEnt();
-	            break;
+	        	int quantite = valEnt();
+                
+                if (quantite == 0) {
+                    erreur(NONFATALE, "Erreur : volume livré nul");
+                    while (numIdCourant() != 5 || numIdCourant() != 6);
+                } else if (quantite > volume) {
+                    erreur(NONFATALE, "Erreur : volume livré dépasse la capacité de la citerne");
+                    while (numIdCourant() != 5 || numIdCourant() != 6);
+                }
+                else if(itemLivré == "BEAUJOLAIS") {
+                    bj += quantite;
+                } 
+                else if(itemLivré == "BOURGOGNE") {
+                    bg += quantite;
+                } 
+                 else {
+                    ordin += quantite;
+                }
+                break;
+
 	        
 	        case 6: // Stocker les informations dans tabChauf[] uniquement si la fiche est valide
 	            if (indChauf >= 0 && indChauf < MAXCHAUF) {
-	                if (tabChauf[indChauf] == null) {
-	                    tabChauf[indChauf] = new Chauffeur(indChauf, 0, 0, 0, new TreeSet<>());
-	                }
 	                tabChauf[indChauf].bj += bj;
 	                tabChauf[indChauf].bg += bg;
 	                tabChauf[indChauf].ordin += ordin;
@@ -236,6 +256,8 @@ public class ActVin extends AutoVin {
 	                erreur(NONFATALE, "Le volume de la citerne doit être entre 100 et 200");
 	                quantite = -1; // Réinitialisation des variables intermédiaires
 	                indMagasin = -1;
+	                // Synchronisation après erreur : consommer jusqu'à ';'
+	                while (numIdCourant() != 5 || numIdCourant() != 6);
 	            }
 	            break;
 	        
@@ -245,8 +267,11 @@ public class ActVin extends AutoVin {
 	        
 	        default:
 	            erreur(NONFATALE, "Action " + numAct + " non prévue");
+	            // Synchronisation après erreur : consommer jusqu'à ';'
+	            while (numIdCourant() != 5 || numIdCourant() != 6);
 	            break;
 	    }
 	} 
+	
 
 } 

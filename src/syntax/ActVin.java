@@ -188,9 +188,7 @@ public class ActVin extends AutoVin {
 	            if (indChauf >= 0 && indChauf < MAXCHAUF) {
 	                if (tabChauf[indChauf] == null) {
 	                    tabChauf[indChauf] = new Chauffeur(indChauf, 0, 0, 0, new TreeSet<>());
-	                } else {
-	                }
-	            } else {
+	                }  
 	            }
 	            break;
 	        

@@ -193,7 +193,7 @@ public class ActVin extends AutoVin {
 	            break;
 	        
 	        case 2: // Mise à jour de la quantité livrée en fonction du type de vin
-	            if (numIdCourant() == 1) {
+	            if (numIdCourant() == 0) {
 	                itemLivré = "BEAUJOLAIS";
 	            } else {
 	                itemLivré = "ORDINAIRE";
@@ -201,7 +201,7 @@ public class ActVin extends AutoVin {
 	            break;
 	        
 	        case 3: // Mise à jour du Beaujolais livré
-	        	if (numIdCourant() == 2) {
+	        	if (numIdCourant() == 1) {
 	                itemLivré = "BOURGOGNE";
 	            } else {
 	                itemLivré = "ORDINAIRE";

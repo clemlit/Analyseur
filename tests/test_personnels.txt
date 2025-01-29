@@ -1,0 +1,17 @@
+DURAND 120
+BEAUJOLAIS
+vieillesgaleries 50 prixmultiples 30,
+BOURGOGNE vieillesgaleries 20;
+DUPONT 110
+BOURGOGNE prixmultiples 30;
+POTIN 140
+BEAUJOLAIS vieillesgaleries 20;
+MARTIN
+elephant 90;
+/
+
+Commentaire
+###########
+ * Plusieurs fiches de livraison, avec un chauffeur apparaissant plusieurs fois.
+ * Capacités valides de citernes (dans l'intervalle 100-200).
+ * Livraison de plusieurs types de vins et plusieurs magasins.

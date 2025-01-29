@@ -1,5 +1,7 @@
 package syntax;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.TreeSet;
 
@@ -131,14 +133,18 @@ public class ActVin extends AutoVin {
 				+ "---------                   --        --       ---     -----";
 		Ecriture.ecrireStringln(titre);
 		for (int i = 0; i <= indChauf; i++) {
-			String idChaufCourant = ((LexVin)analyseurLexical).chaineIdent(tabChauf[i].numChauf);
-			Ecriture.ecrireString(chaineCadrageGauche(idChaufCourant));
-			Ecriture.ecrireInt(tabChauf[i].bj, 10);
-			Ecriture.ecrireInt(tabChauf[i].bg, 10);
-			Ecriture.ecrireInt(tabChauf[i].ordin, 10);
-			Ecriture.ecrireInt(tabChauf[i].magDif.size(), 10);
-			Ecriture.ecrireStringln("");
-		}
+	        if (tabChauf[i] != null) {  // Vérifie que l'élément est non nul avant d'accéder à ses propriétés
+	            String idChaufCourant = ((LexVin)analyseurLexical).chaineIdent(tabChauf[i].numChauf);
+	            Ecriture.ecrireString(chaineCadrageGauche(idChaufCourant));
+	            Ecriture.ecrireInt(tabChauf[i].bj, 10);
+	            Ecriture.ecrireInt(tabChauf[i].bg, 10);
+	            Ecriture.ecrireInt(tabChauf[i].ordin, 10);
+	            Ecriture.ecrireInt(tabChauf[i].magDif.size(), 10);
+	            Ecriture.ecrireStringln("");
+	        } else {
+	            Ecriture.ecrireStringln("Chauffeur à l'indice " + i + " non initialisé.");
+	        }
+	    }
 	} 
 	
 	
@@ -148,13 +154,9 @@ public class ActVin extends AutoVin {
 	private int bj;
 	private int bg;
 	private int ordin;
-	private int quantite;
 	private int volume;
-	private int i;
-	private int nbmag;
 	private String itemLivré;
-	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
-
+	private int sommeq;
 	
 	/**
 	 * initialisations a effectuer avant les actions
@@ -165,12 +167,9 @@ public class ActVin extends AutoVin {
 		bj = 0;
 		bg = 0;
 		ordin = 0;
-		quantite = -1;
-		i =0;
-		volume =100;
-		nbmag = 0;
+		volume =100;	
 		itemLivré = "";
-		/*!!! TODO : A COMPLETER SI BESOIN !!!*/
+		sommeq = 0;
 	} 
 	
 
@@ -185,9 +184,14 @@ public class ActVin extends AutoVin {
 	        
 	        case 1: // Associer l'identifiant du chauffeur courant
 	        	indChauf = numIdCourant();
-	        	if (tabChauf[indChauf] == null) {
-                    tabChauf[indChauf] = new Chauffeur(indChauf, 0, 0, 0, new TreeSet<>());
-                }
+	            // Vérifie si l'indice est valide
+	            if (indChauf >= 0 && indChauf < MAXCHAUF) {
+	                if (tabChauf[indChauf] == null) {
+	                    tabChauf[indChauf] = new Chauffeur(indChauf, 0, 0, 0, new TreeSet<>());
+	                } else {
+	                }
+	            } else {
+	            }
 	            break;
 	        
 	        case 2: // Mise à jour de la quantité livrée en fonction du type de vin
@@ -208,6 +212,7 @@ public class ActVin extends AutoVin {
 	        
 	        case 5: // Lire la quantité à livrer
 	        	int quantite = valEnt();
+	        	sommeq += quantite;
                 
                 if (quantite == 0) {
                     erreur(NONFATALE, "Erreur : volume livré nul");
@@ -216,10 +221,15 @@ public class ActVin extends AutoVin {
                     erreur(NONFATALE, "Erreur : volume livré dépasse la capacité de la citerne");
                     while (numIdCourant() != 5 || numIdCourant() != 6);
                 }
-                else if(itemLivré == "BEAUJOLAIS") {
+                /*else if (sommeq > volume) {
+                    erreur(NONFATALE, "Erreur : volume total des livraison dépasse la capacité de la citerne");
+                    sommeq = 0;
+                    while (numIdCourant() != 5 || numIdCourant() != 6);
+                }*/
+                else if(itemLivré.equals( "BEAUJOLAIS")) {
                     bj += quantite;
                 } 
-                else if(itemLivré == "BOURGOGNE") {
+                else if(itemLivré.equals("BOURGOGNE")) {
                     bg += quantite;
                 } 
                  else {
@@ -238,14 +248,13 @@ public class ActVin extends AutoVin {
 	                bj = 0;
 	                bg = 0;
 	                ordin = 0;
+	                sommeq = 0;
 	            } else {
 	                erreur(FATALE, "Indice de chauffeur hors limites");
 	            }
 	            break;
 	        
 	        case 7: // Incrémentation du nombre de magasins livrés
-	            nbmag++;
-	            i++;
 	            break;
 	        
 	        case 8: // Vérification et stockage du volume

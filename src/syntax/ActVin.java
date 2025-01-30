@@ -154,6 +154,7 @@ public class ActVin extends AutoVin {
 	// 1 : BOURGOGNE
 	// 2 : ORDINAIRE
 	
+	private int volCiterne;
 	private int nbFicheActuel;
 	private int nbDeFicheCorrecte = 0 ; 
 	
@@ -203,6 +204,7 @@ public class ActVin extends AutoVin {
 			break;
 			
 		case 2:
+			volCiterne = valEnt();
 			break;
 		
 		case 3:

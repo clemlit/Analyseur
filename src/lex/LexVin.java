@@ -49,7 +49,7 @@ public class LexVin extends Lex {
 	public LexVin(InputStream flot) {
 		// Initialisation du flot par la classe abstraite
 		super(flot);
-		System.out.println("Trinome MESSAGER_Clément_LEPORT_ETEL_MOUTALABI_Adebayo_Habib");
+		System.out.println("Trinome MESSAGER_Clément_LEPORT_Etel_MOUTALABI_Adebayo_Habib");
 		System.out.println("--------------");
 
 		// Prelecture du premier caractere de la donnee

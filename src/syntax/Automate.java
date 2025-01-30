@@ -1,7 +1,7 @@
 package syntax ;
 
 import java.util.ArrayList;
-import lexEns.*;
+import lex.*;
 import utils.*;
 
 /**

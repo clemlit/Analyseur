@@ -5,13 +5,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import utils.*;
-import lexEns.*;
+import lex.*;
 
 /**
 * La classe ActVin met en oeuvre les actions de l'automate d'analyse syntaxique de l'application Vin
 *  des fiches de livraison de vin
 * 
-* @author "Trinome MESSAGER_Clément_LEPORT_ETEL_MOUTALABI_Habib"
+* @author "Trinome MESSAGER_Clément_LEPORT_Etel_MOUTALABI_Habib"
 * 
 * janvier 2025
 */
@@ -214,33 +214,25 @@ public class ActVin extends AutoVin {
 			break;
 		
 		case 5:
-			if(!chaufActuel.magDif.contains(numIdCourant())) {
-				chaufActuel.magDif.add(numIdCourant());
-			}
-			break;
+			if (!chaufActuel.magDif.contains(numIdCourant())) {
+		        chaufActuel.magDif.add(numIdCourant());
+		    }
+		    break;
 		case 6:
-			switch(qualiteActuel) {
-			case 0 :
-				chaufActuel.bj += valEnt();
-				if(chaufActuel.bj > 200 || chaufActuel.bj < 100) chaufActuel.bj = 100;
-				Ecriture.ecrireStringln("Capacité de la citerne BEAUJOLAIS pas dans l'intervalle 100 : 200 ");
-				break;
-			case 1 :
-				chaufActuel.bg += valEnt();
-				if(chaufActuel.bg > 200 || chaufActuel.bg < 100) chaufActuel.bg = 100;
-				Ecriture.ecrireStringln("capacité de la citerne BOURGOGNE pas dans l'intervalle 100 : 200 ");
-
-				break;
-			case 2 :
-				chaufActuel.ordin += valEnt();
-				if(chaufActuel.ordin > 200 || chaufActuel.ordin < 100) chaufActuel.ordin = 100;
-				Ecriture.ecrireStringln("Capacité de la citerne ORDINAIRE pas dans l'intervalle 100 : 200");
-				break;
-			
-			default :
-				break;
-			}
-			break;
+			switch (qualiteActuel) {
+	        case 0:
+	            chaufActuel.bj += valEnt();
+	            break;
+	        case 1:
+	            chaufActuel.bg += valEnt();
+	            break;
+	        case 2:
+	            chaufActuel.ordin += valEnt();
+	            break;
+	        default:
+	            break;
+	    }
+	    break;
 			
 		case 7:
 			qualiteActuel = 2;
@@ -263,12 +255,7 @@ public class ActVin extends AutoVin {
 					chaufMax = tabChauf[i];
 					idChaufCourant = ((LexVin)analyseurLexical).chaineIdent(chaufMax.numChauf);
 				}
-			}
-			Ecriture.ecrireStringln("Le chauffeur ayant livré le plus de magasins différents est " + idChaufCourant);
-			Ecriture.ecrireStringln("Le nombre total de fiches traités est " + nbFicheActuel);
-			Ecriture.ecrireStringln("Le nombre de fiches  correctes parmi ces fiches traités est " + (nbDeFicheCorrecte));
-
-			
+			}			
 			break;
 			
 		default:

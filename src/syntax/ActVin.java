@@ -257,6 +257,7 @@ public class ActVin extends AutoVin {
 			volume = 100;
 			volumeActuel = 0;
 			break;
+			
 		case 9:
 			Ecriture.ecrireStringln("Fin de l'analyse ");
 			Chauffeur chaufMax = new Chauffeur(numIdCourant(),0,0,0, new TreeSet<Integer>());

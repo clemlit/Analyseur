@@ -149,6 +149,7 @@ public class ActVin extends AutoVin {
 	private int indChauf ;
 	
 	private Chauffeur chaufActuel;
+	private int volume;
 	private int qualiteActuel;
 	// 0 : BEAUJOLAIS
 	// 1 : BOURGOGNE
@@ -156,6 +157,7 @@ public class ActVin extends AutoVin {
 	
 	private int nbFicheActuel;
 	private int nbDeFicheCorrecte = 0 ; 
+	private int volumeActuel;
 	
 	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
 	/*!!! TODO : A COMPLETER SI BESOIN !!!*/
@@ -169,6 +171,7 @@ public class ActVin extends AutoVin {
 		chaufActuel = null;
 		qualiteActuel = 2;
 		nbFicheActuel = 0;
+		volume = 100;
 	} 
 	
 
@@ -203,6 +206,7 @@ public class ActVin extends AutoVin {
 			break;
 			
 		case 2:
+			volume = valEnt();
 			break;
 		
 		case 3:
@@ -219,20 +223,26 @@ public class ActVin extends AutoVin {
 		    }
 		    break;
 		case 6:
-			switch (qualiteActuel) {
-	        case 0:
-	            chaufActuel.bj += valEnt();
-	            break;
-	        case 1:
-	            chaufActuel.bg += valEnt();
-	            break;
-	        case 2:
-	            chaufActuel.ordin += valEnt();
-	            break;
-	        default:
-	            break;
-	    }
-	    break;
+			volumeActuel = chaufActuel.bj + chaufActuel.bg + chaufActuel.ordin + valEnt();
+			if(volumeActuel < volume) {
+				switch(qualiteActuel) {
+					case 0 :
+						chaufActuel.bj += valEnt();
+					break;
+					case 1 :
+						chaufActuel.bg += valEnt();
+						break;
+					case 2 :
+						chaufActuel.ordin += valEnt();
+						break;
+			
+					default :
+				break;
+				}
+			}else {
+				erreur(NONFATALE,"Le volume de la citerne va être dépasser");
+			}
+		break;
 			
 		case 7:
 			qualiteActuel = 2;
@@ -244,6 +254,8 @@ public class ActVin extends AutoVin {
 			chaufActuel = null;
 			qualiteActuel = 2;
 			nbDeFicheCorrecte++;
+			volume = 100;
+			volumeActuel = 0;
 			break;
 		case 9:
 			Ecriture.ecrireStringln("Fin de l'analyse ");

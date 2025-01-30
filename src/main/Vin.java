@@ -1,9 +1,8 @@
 package main;
 
 import java.io.InputStream;
-
-import utils.*;
 import syntax.*;
+import utils.*;
 
 /**
  * La classe Vin correspond au programme principal d'un

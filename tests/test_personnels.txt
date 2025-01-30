@@ -1,6 +1,6 @@
 DURAND 120
 BEAUJOLAIS
-vieillesgaleries 50 prixmultiples 50,
+vieillesgaleries 50 prixmultiples 20,
 BOURGOGNE vieillesgaleries 50;
 DUPONT 110
 BOURGOGNE prixmultiples 30;

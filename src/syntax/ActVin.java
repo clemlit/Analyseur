@@ -1,11 +1,9 @@
 package syntax;
 
 import java.io.InputStream;
-import java.util.Set;
 import java.util.TreeSet;
-
-import utils.*;
 import lex.*;
+import utils.*;
 
 /**
 * La classe ActVin met en oeuvre les actions de l'automate d'analyse syntaxique de l'application Vin
@@ -149,6 +147,7 @@ public class ActVin extends AutoVin {
 	private int indChauf ;
 	
 	private Chauffeur chaufActuel;
+	private int volumeActuel;
 	private int qualiteActuel;
 	// 0 : BEAUJOLAIS
 	// 1 : BOURGOGNE
@@ -158,8 +157,6 @@ public class ActVin extends AutoVin {
 	private int nbFicheActuel;
 	private int nbDeFicheCorrecte = 0 ; 
 	
-	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
-	/*!!! TODO : A COMPLETER SI BESOIN !!!*/
 
 	
 	/**
@@ -170,13 +167,9 @@ public class ActVin extends AutoVin {
 		chaufActuel = null;
 		qualiteActuel = 2;
 		nbFicheActuel = 0;
-		volume = 100;
+		volCiterne = 100;
 	} 
 	
-
-	n d'une action
-	 * @param numact numero de l'action a executer
-	 */
 	public void executer(int numAct) {
 
 		switch (numAct) {
@@ -204,7 +197,7 @@ public class ActVin extends AutoVin {
 			break;
 			
 		case 2:
-			volume = valEnt();
+			volCiterne = valEnt();
 			volCiterne = valEnt();
 			break;
 		
@@ -222,7 +215,7 @@ public class ActVin extends AutoVin {
 		    break;
 		case 6:
 			volumeActuel = chaufActuel.bj + chaufActuel.bg + chaufActuel.ordin + valEnt();
-			if(volumeActuel < volume) {
+			if(volumeActuel <= volCiterne) {
 				switch(qualiteActuel) {
 					case 0 :
 						chaufActuel.bj += valEnt();
@@ -252,7 +245,7 @@ public class ActVin extends AutoVin {
 			chaufActuel = null;
 			qualiteActuel = 2;
 			nbDeFicheCorrecte++;
-			volume = 100;
+			volCiterne = 100;
 			volumeActuel = 0;
 			break;
 			

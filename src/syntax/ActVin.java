@@ -175,7 +175,7 @@ public class ActVin extends AutoVin {
 		switch (numAct) {
 		case -1:	// action vide
 			break;
-		case 1:
+		case 1: // Lecture du chauffeur
 			nbFicheActuel++;
 			
 			boolean trouve = false;
@@ -196,24 +196,25 @@ public class ActVin extends AutoVin {
 			}
 			break;
 			
-		case 2:
-			volCiterne = valEnt();
+		case 2: // Lecture du Volume de la citerne
 			volCiterne = valEnt();
 			break;
 		
-		case 3:
+		case 3: // Qualité = BEAUJOLAIS
+			qualiteActuel = 0;
 			break;
 		
-		case 4:
+		case 4: //Qualité = BOURGOGNE
 			qualiteActuel = 1;
 			break;
 		
-		case 5:
+		case 5: // Lecture du  magasin
 			if (!chaufActuel.magDif.contains(numIdCourant())) {
 		        chaufActuel.magDif.add(numIdCourant());
 		    }
 		    break;
-		case 6:
+		    
+		case 6: // Lecture de la quantité
 			volumeActuel = chaufActuel.bj + chaufActuel.bg + chaufActuel.ordin + valEnt();
 			if(volumeActuel <= volCiterne) {
 				switch(qualiteActuel) {
@@ -232,14 +233,15 @@ public class ActVin extends AutoVin {
 				}
 			}else {
 				erreur(NONFATALE,"Le volume de la citerne va être dépasser");
+				while(numAct != 8 || numAct != 9);
 			}
 		break;
 			
-		case 7:
+		case 7: // Lecture de la ','
 			qualiteActuel = 2;
 			break;
 		
-		case 8:
+		case 8: // Lecture du ';'
 			Ecriture.ecrireStringln("Fin de la fiche " + nbFicheActuel);
 			afficherChauf();
 			chaufActuel = null;
@@ -249,7 +251,7 @@ public class ActVin extends AutoVin {
 			volumeActuel = 0;
 			break;
 			
-		case 9:
+		case 9: // Lecture de la '/'
 			Ecriture.ecrireStringln("Fin de l'analyse ");
 			Chauffeur chaufMax = new Chauffeur(numIdCourant(),0,0,0, new TreeSet<Integer>());
 			String idChaufCourant = "";
@@ -263,9 +265,8 @@ public class ActVin extends AutoVin {
 			break;
 			
 		default:
-			
-			//Ecriture.ecrireStringln("Le nombre de fiches  correctes parmi ces fiches traités est " + (nbFicheActuel- nbDeFicheErreur));
-			Lecture.attenteSurLecture("action " + numAct + " non prevue");
+			erreur(NONFATALE,"action " + numAct + " non prevue");
+			while(numAct != 8 || numAct != 9);
 			
 		}
 	} 

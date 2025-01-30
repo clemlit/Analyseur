@@ -174,6 +174,9 @@ public class ActVin extends AutoVin {
 
 		switch (numAct) {
 		case -1:	// action vide
+			if(etatCourant == etatErreur) {
+				break;
+			}
 			break;
 		case 1: // Lecture du chauffeur
 			nbFicheActuel++;

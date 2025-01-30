@@ -1,18 +1,17 @@
 package syntax;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.Set;
 import java.util.TreeSet;
 
 import utils.*;
-import lex.*;
+import lexEns.*;
 
 /**
 * La classe ActVin met en oeuvre les actions de l'automate d'analyse syntaxique de l'application Vin
 *  des fiches de livraison de vin
 * 
-* @author Trinome 5, Groupe 3 : MESSAGER Clément, MOUTALABI Adebayo Habib, LEPORT Etel
+* @author "Trinome MESSAGER_Clément_LEPORT_ETEL_MOUTALABI_Habib"
 * 
 * janvier 2025
 */
@@ -21,14 +20,14 @@ public class ActVin extends AutoVin {
     /** table des actions */
     private final int[][] ACTION =
     {/* Etat        BJ    BG   IDENT  NBENT VIRG PTVIRG BARRE AUTRES  */
-	/* 0 */      { 10,   10,    1,    10,   10,   10,    9,   10   },
-	/* 1 */      {  3,    2,    4,     8,   10,   10,   10,   10   },
-	/* 2 */      {  3,    2,    4,    10,   10,   10,   10,   10   },
-	/* 3 */      { 10,   10,    4,    10,   10,   10,   10,   10   },
-	/* 4 */      { 10,   10,   10,     5,   10,   10,   10,   10   },
-	/* 5 */      { 10,   10,    5,    10,    7,    6,   10,   10   },
-	/* 6 */      {  3,    2,    4,     8,   10,   10,   10,   10   },
-	/*!!! TODO !!!*/
+	/* 0 */      { 10,   10,    1,     10,   10,   10,   9,   10   },
+	/* 1 */      {  3,    4,    5,     2,    10,   10,   10,   10   },
+	/* 2 */      {  3,    4,    5,     10,   10,   10,   10,   10  },
+	/* 3 */      { 10,   10,    5,     10,   10,   10,   10,   10   },
+	/* 4 */      { 10,   10,   10,     6,   10,   10,   10,   10   },
+	/* 5 */      { 10,   10,   5,     10,   7,    8,   10,   10   },
+	/* 6 */      { -1,   -1,   -1,    -1,   -1,   10,   9,   -1   },
+	
 	/* Rappel conventions :  action -1 = action vide, pas de ligne pour etatFinal */
     } ;	       
     
@@ -129,47 +128,47 @@ public class ActVin extends AutoVin {
 	 * */
 	private void afficherChauf() {
 		Ecriture.ecrireStringln("");
-		String titre = "CHAUFFEUR                   BJ        BG       ORD     NBMAG\n"
-				+ "---------                   --        --       ---     -----";
+		String titre = "CHAUFFEUR                   BJ        BG       ORD     NBMAG     CUMUL\n"
+				+ "---------                   --        --       ---     -----     ------";
 		Ecriture.ecrireStringln(titre);
 		for (int i = 0; i <= indChauf; i++) {
-	        if (tabChauf[i] != null) {  // Vérifie que l'élément est non nul avant d'accéder à ses propriétés
-	            String idChaufCourant = ((LexVin)analyseurLexical).chaineIdent(tabChauf[i].numChauf);
-	            Ecriture.ecrireString(chaineCadrageGauche(idChaufCourant));
-	            Ecriture.ecrireInt(tabChauf[i].bj, 10);
-	            Ecriture.ecrireInt(tabChauf[i].bg, 10);
-	            Ecriture.ecrireInt(tabChauf[i].ordin, 10);
-	            Ecriture.ecrireInt(tabChauf[i].magDif.size(), 10);
-	            Ecriture.ecrireStringln("");
-	        } else {
-	            Ecriture.ecrireStringln("Chauffeur à l'indice " + i + " non initialisé.");
-	        }
-	    }
+			String idChaufCourant = ((LexVin)analyseurLexical).chaineIdent(tabChauf[i].numChauf);
+			Ecriture.ecrireString(chaineCadrageGauche(idChaufCourant));
+			Ecriture.ecrireInt(tabChauf[i].bj, 10);
+			Ecriture.ecrireInt(tabChauf[i].bg, 10);
+			Ecriture.ecrireInt(tabChauf[i].ordin, 10);
+			Ecriture.ecrireInt(tabChauf[i].magDif.size(), 10);
+			Ecriture.ecrireInt(tabChauf[i].ordin+tabChauf[i].bg+tabChauf[i].bj, 10);
+
+			Ecriture.ecrireStringln("");
+		}
 	} 
 	
 	
 	/** indice courant du nombre de chauffeurs dans le tableau tabChauf */
 	private int indChauf ;
-	private int indMagasin;
-	private int bj;
-	private int bg;
-	private int ordin;
-	private int volume;
-	private String itemLivré;
-	private int sommeq;
+	
+	private Chauffeur chaufActuel;
+	private int qualiteActuel;
+	// 0 : BEAUJOLAIS
+	// 1 : BOURGOGNE
+	// 2 : ORDINAIRE
+	
+	private int nbFicheActuel;
+	private int nbDeFicheCorrecte = 0 ; 
+	
+	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
+	/*!!! TODO : A COMPLETER SI BESOIN !!!*/
+
 	
 	/**
 	 * initialisations a effectuer avant les actions
 	 */
 	private void initialisations() {
 		indChauf = -1;
-		indMagasin = -1;
-		bj = 0;
-		bg = 0;
-		ordin = 0;
-		volume =100;	
-		itemLivré = "";
-		sommeq = 0;
+		chaufActuel = null;
+		qualiteActuel = 2;
+		nbFicheActuel = 0;
 	} 
 	
 
@@ -178,111 +177,106 @@ public class ActVin extends AutoVin {
 	 * @param numact numero de l'action a executer
 	 */
 	public void executer(int numAct) {
-	    switch (numAct) {
-	        case -1: // Action vide
-	            break;
-	        
-	        case 1: // Associer l'identifiant du chauffeur courant
-	        	indChauf = numIdCourant();
-	            // Vérifie si l'indice est valide
-	            if (indChauf >= 0 && indChauf < MAXCHAUF) {
-	                if (tabChauf[indChauf] == null) {
-	                    tabChauf[indChauf] = new Chauffeur(indChauf, 0, 0, 0, new TreeSet<>());
-	                }  
-	            }
-	            break;
-	        
-	        case 2: // Mise à jour de la quantité livrée en fonction du type de vin
-	            if (numIdCourant() == 0) {
-	                itemLivré = "BEAUJOLAIS";
-	            } else {
-	                itemLivré = "ORDINAIRE";
-	            }
-	            break;
-	        
-	        case 3: // Mise à jour du Beaujolais livré
-	        	if (numIdCourant() == 1) {
-	                itemLivré = "BOURGOGNE";
-	            } else {
-	                itemLivré = "ORDINAIRE";
-	            }
-	            break;
-	        
-	        case 4: // Associer l'identifiant du magasin courant
-	            indMagasin = numIdCourant();
-	            break;
-	        
-	        case 5: // Lire la quantité à livrer
-	        	int quantite = valEnt();
-	        	sommeq += quantite;
-                
-                if (quantite == 0) {
-                    erreur(NONFATALE, "Erreur : volume livré nul");
-                    while (numIdCourant() != 5 || numIdCourant() != 6);
-                } else if (quantite > volume) {
-                    erreur(NONFATALE, "Erreur : volume livré dépasse la capacité de la citerne");
-                    while (numIdCourant() != 5 || numIdCourant() != 6);
-                }
-                /*else if (sommeq > volume) {
-                    erreur(NONFATALE, "Erreur : volume total des livraison dépasse la capacité de la citerne");
-                    sommeq = 0;
-                    while (numIdCourant() != 5 || numIdCourant() != 6);
-                }*/
-                else if(itemLivré.equals( "BEAUJOLAIS")) {
-                    bj += quantite;
-                } 
-                else if(itemLivré.equals("BOURGOGNE")) {
-                    bg += quantite;
-                } 
-                 else {
-                    ordin += quantite;
-                }
-                break;
 
-	        
-	        case 6: // Stocker les informations dans tabChauf[] uniquement si la fiche est valide
-	            if (indChauf >= 0 && indChauf < MAXCHAUF) {
-	                tabChauf[indChauf].bj += bj;
-	                tabChauf[indChauf].bg += bg;
-	                tabChauf[indChauf].ordin += ordin;
-	                tabChauf[indChauf].magDif.add(indMagasin);
-	                // Réinitialisation après validation
-	                bj = 0;
-	                bg = 0;
-	                ordin = 0;
-	                sommeq = 0;
-	            } else {
-	                erreur(FATALE, "Indice de chauffeur hors limites");
-	            }
-	            break;
-	        
-	        case 7: // Incrémentation du nombre de magasins livrés
-	            break;
-	        
-	        case 8: // Vérification et stockage du volume
-	            int volumeLu = valEnt();
-	            if (volumeLu >= 100 && volumeLu <= 200) {
-	                volume = volumeLu;
-	            } else {
-	                erreur(NONFATALE, "Le volume de la citerne doit être entre 100 et 200");
-	                quantite = -1; // Réinitialisation des variables intermédiaires
-	                indMagasin = -1;
-	                // Synchronisation après erreur : consommer jusqu'à ';'
-	                while (numIdCourant() != 5 || numIdCourant() != 6);
-	            }
-	            break;
-	        
-	        case 9: // Affichage des informations des chauffeurs
-	            afficherChauf();
-	            break;
-	        
-	        default:
-	            erreur(NONFATALE, "Action " + numAct + " non prévue");
-	            // Synchronisation après erreur : consommer jusqu'à ';'
-	            while (numIdCourant() != 5 || numIdCourant() != 6);
-	            break;
-	    }
+		switch (numAct) {
+		case -1:	// action vide
+			break;
+		case 1:
+			nbFicheActuel++;
+			
+			boolean trouve = false;
+			for( int i = 0; i<= indChauf ; i++) {
+				Chauffeur chauf = tabChauf[i];
+				if(chauf.numChauf == numIdCourant()) {
+					chaufActuel = chauf;
+					trouve = true;
+					break;
+				}
+			}
+			
+			if(!trouve && indChauf < MAXCHAUF) {
+				Chauffeur chauf = new Chauffeur(numIdCourant(),0,0,0, new TreeSet<Integer>());
+				tabChauf[indChauf + 1] = chauf;
+				chaufActuel = chauf;
+				indChauf++;
+			}
+			break;
+			
+		case 2:
+			break;
+		
+		case 3:
+			qualiteActuel = 0;
+			break;
+		
+		case 4:
+			qualiteActuel = 1;
+			break;
+		
+		case 5:
+			if(!chaufActuel.magDif.contains(numIdCourant())) {
+				chaufActuel.magDif.add(numIdCourant());
+			}
+			break;
+		case 6:
+			switch(qualiteActuel) {
+			case 0 :
+				chaufActuel.bj += valEnt();
+				if(chaufActuel.bj > 200 || chaufActuel.bj < 100) chaufActuel.bj = 100;
+				Ecriture.ecrireStringln("Capacité de la citerne BEAUJOLAIS pas dans l'intervalle 100 : 200 ");
+				break;
+			case 1 :
+				chaufActuel.bg += valEnt();
+				if(chaufActuel.bg > 200 || chaufActuel.bg < 100) chaufActuel.bg = 100;
+				Ecriture.ecrireStringln("capacité de la citerne BOURGOGNE pas dans l'intervalle 100 : 200 ");
+
+				break;
+			case 2 :
+				chaufActuel.ordin += valEnt();
+				if(chaufActuel.ordin > 200 || chaufActuel.ordin < 100) chaufActuel.ordin = 100;
+				Ecriture.ecrireStringln("Capacité de la citerne ORDINAIRE pas dans l'intervalle 100 : 200");
+				break;
+			
+			default :
+				break;
+			}
+			break;
+			
+		case 7:
+			qualiteActuel = 2;
+			break;
+		
+		case 8:
+			Ecriture.ecrireStringln("Fin de la fiche " + nbFicheActuel);
+			afficherChauf();
+			chaufActuel = null;
+			qualiteActuel = 2;
+			nbDeFicheCorrecte++;
+			break;
+		case 9:
+			Ecriture.ecrireStringln("Fin de l'analyse ");
+			Chauffeur chaufMax = new Chauffeur(numIdCourant(),0,0,0, new TreeSet<Integer>());
+			String idChaufCourant = "";
+			for (int i = 0; i <= indChauf; i++) {
+				if(tabChauf[i].magDif.size()> chaufMax.magDif.size()) {
+					System.out.println(tabChauf[i]);
+					chaufMax = tabChauf[i];
+					idChaufCourant = ((LexVin)analyseurLexical).chaineIdent(chaufMax.numChauf);
+				}
+			}
+			Ecriture.ecrireStringln("Le chauffeur ayant livré le plus de magasins différents est " + idChaufCourant);
+			Ecriture.ecrireStringln("Le nombre total de fiches traités est " + nbFicheActuel);
+			Ecriture.ecrireStringln("Le nombre de fiches  correctes parmi ces fiches traités est " + (nbDeFicheCorrecte));
+
+			
+			break;
+			
+		default:
+			
+			//Ecriture.ecrireStringln("Le nombre de fiches  correctes parmi ces fiches traités est " + (nbFicheActuel- nbDeFicheErreur));
+			Lecture.attenteSurLecture("action " + numAct + " non prevue");
+			
+		}
 	} 
-	
 
 } 

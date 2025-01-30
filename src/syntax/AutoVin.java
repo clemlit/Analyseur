@@ -2,7 +2,7 @@ package syntax;
 
 import java.io.*;
 import utils.*;
-import lex.*;
+import lexEns.*;
 
 /**
  * La classe AutoVin met en oeuvre l'automate d'analyse syntaxique de distribution de vin

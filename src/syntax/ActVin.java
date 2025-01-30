@@ -149,15 +149,14 @@ public class ActVin extends AutoVin {
 	private int indChauf ;
 	
 	private Chauffeur chaufActuel;
-	private int volume;
 	private int qualiteActuel;
 	// 0 : BEAUJOLAIS
 	// 1 : BOURGOGNE
 	// 2 : ORDINAIRE
 	
+	private int volCiterne;
 	private int nbFicheActuel;
 	private int nbDeFicheCorrecte = 0 ; 
-	private int volumeActuel;
 	
 	/*!!! TODO : DELARATIONS A COMPLETER !!!*/
 	/*!!! TODO : A COMPLETER SI BESOIN !!!*/
@@ -175,8 +174,7 @@ public class ActVin extends AutoVin {
 	} 
 	
 
-	/**
-	 * execution d'une action
+	n d'une action
 	 * @param numact numero de l'action a executer
 	 */
 	public void executer(int numAct) {
@@ -207,10 +205,10 @@ public class ActVin extends AutoVin {
 			
 		case 2:
 			volume = valEnt();
+			volCiterne = valEnt();
 			break;
 		
 		case 3:
-			qualiteActuel = 0;
 			break;
 		
 		case 4:

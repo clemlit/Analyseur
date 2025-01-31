@@ -202,6 +202,11 @@ public class ActVin extends AutoVin {
 			if(valEnt() > 200 || valEnt() < 100) {
 				volCiterne = valEnt();
 			}else {
+				numAct = 8;
+				chaufActuel = null;
+				qualiteActuel = 2;
+				volCiterne = 100;
+				volumeActuel = 0;
 				erreur(NONFATALE,"Le volume de la citerne n'est pas compris entre 100 et 200");
 			}
 			break;
@@ -238,7 +243,12 @@ public class ActVin extends AutoVin {
 				break;
 				}
 			}else {
-				System.out.println("Le volume de la citerne va être dépassé");
+				numAct = 8;
+				chaufActuel = null;
+				qualiteActuel = 2;
+				volCiterne = 100;
+				volumeActuel = 0;
+				erreur(NONFATALE,"Le volume de la citerne va être dépassé");
 				while(numAct != 8 || numAct != 9);
 			}
 		break;

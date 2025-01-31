@@ -242,6 +242,12 @@ public class ActVin extends AutoVin {
 				break;
 				}
 			}else {
+				if(volumeActuel == 0) {
+					erreur(NONFATALE, "Quantité livrée ne doit pas être nulle");
+				}
+				else if(volumeActuel > volCiterne) {
+					erreur(NONFATALE, "QUantité livrée ne doit pas être supérieure au vol. citerne");
+				}
 				numAct = 8;
 				chaufActuel = null;
 				qualiteActuel = 2;

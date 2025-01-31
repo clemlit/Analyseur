@@ -1,12 +1,22 @@
+#######################################
+          JEU DE TEST
+#######################################
+
+################################################## TEST 1 ##################################################
+
+Donnée à analyser
+#################
+
 DURAND 120
 BEAUJOLAIS
-vieillesgaleries 50 prixmultiples 20,
-BOURGOGNE vieillesgaleries 50;
+vieillesgaleries 50 prixmultiples 70,
+prixmultiples 110,
+BOURGOGNE
 DUPONT 110
-BOURGOGNE prixmultiples 30;
+BOURGOGNE
 POTIN 140
-BEAUJOLAIS vieillesgaleries 20;
-MARTIN
+BEAUJOLAIS
+DURAND
 elephant 90;
 /
 
@@ -15,3 +25,369 @@ Commentaire
  * Plusieurs fiches de livraison, avec un chauffeur apparaissant plusieurs fois.
  * Capacités valides de citernes (dans l'intervalle 100-200).
  * Livraison de plusieurs types de vins et plusieurs magasins.
+
+
+################################################## TEST 2 ##################################################
+
+Donnée à analyser
+#################
+
+MARTIN 100
+BOURGOGNE
+INTERMARCHE 60 CASINO 40;
+/
+
+Commentaire
+###########
+ * Livraison correcte avec un seul chauffeur et une seule qualité de vin.
+ * Capacité exacte de la citerne.
+ * Plusieurs magasins livrés.
+
+
+################################################## TEST 3 ##################################################
+
+Donnée à analyser
+#################
+
+ROBERT 120
+SUPERU 100 LEADERPRICE 50;
+/
+
+Commentaire
+###########
+ * La qualité du vin n'est pas spécifiée -> doit être considéré comme "ORDINAIRE".
+
+
+################################################## TEST 4 ##################################################
+
+Donnée à analyser
+#################
+
+PAUL 180
+BOURGOGNE
+LIDL 0;
+/
+
+Commentaire
+###########
+ * Erreur : volume livré nul.
+ * Doit être signalé et ignoré.
+
+
+################################################## TEST 5 ##################################################
+
+Donnée à analyser
+#################
+
+JEAN 130
+BEAUJOLAIS
+INTERMARCHE 200;
+/
+
+Commentaire
+###########
+ * Erreur : volume livré supérieur à la capacité de la citerne.
+ * Doit être signalé et ignoré.
+
+
+################################################## TEST 6 ##################################################
+
+Donnée à analyser
+#################
+
+DUPONT 90
+BOURGOGNE
+AUCHAN 50;
+/
+
+Commentaire
+###########
+ * Erreur : capacité de citerne inférieure à 100.
+ * Doit être forcée à 100.
+
+
+################################################## TEST 7 ##################################################
+
+Donnée à analyser
+#################
+
+CHAUFFEUR1 150
+BEAUJOLAIS
+MAG1 50, MAG2 50, MAG3 50, MAG4 50, MAG5 50, MAG6 50, MAG7 50, MAG8 50, MAG9 50, MAG10 50, MAG11 50;
+/
+
+Commentaire
+###########
+ * Erreur fatale : plus de 10 chauffeurs.
+ * Doit être signalé et l'analyse stoppée.
+
+
+################################################## TEST 8 ##################################################
+
+Donnée à analyser
+#################
+
+LEBLANC 120
+BEAUJOLAIS
+INTERMARCHE 60 CASINO 40,;
+/
+
+Commentaire
+###########
+ * Erreur de syntaxe : virgule mal placée.
+ * Doit être signalée et reprise de l'analyse à l'item suivant.
+
+
+################################################## TEST 9 ##################################################
+
+Donnée à analyser
+#################
+
+MARTIN
+BEAUJOLAIS
+INTERMARCHE 60 CASINO 40;
+/
+
+Commentaire
+###########
+ * Volume de citerne absent.
+ * Doit être forcé à 100.
+
+
+################################################## TEST 10 ##################################################
+
+Donnée à analyser
+#################
+
+DUPONT 150
+BOURGOGNE
+POTIN 50, VIEILLESGALERIES 40, ELEPHANT 10;
+/
+
+Commentaire
+###########
+ * Test standard avec plusieurs magasins livrés.
+ * Aucun problème prévu.
+
+
+################################################## TEST 11 ##################################################
+
+Donnée à analyser
+#################
+
+CHAUFFEUR1 120
+BOURGOGNE
+INTERMARCHE 50, CASINO 50;
+CHAUFFEUR2 140
+BEAUJOLAIS
+CARREFOUR 100, AUCHAN 100;
+/
+
+Commentaire
+###########
+ * Test avec plusieurs chauffeurs différents.
+ * Quantités valides et bien réparties.
+
+
+#######################################
+          FIN DU JEU DE TEST
+#######################################
+
+#######################################
+          JEU DE TEST
+#######################################
+
+################################################## TEST 1 ##################################################
+
+Donnée à analyser
+#################
+
+DURAND 120
+BEAUJOLAIS
+vieillesgaleries 50 prixmultiples 70,
+prixmultiples 110,
+BOURGOGNE
+DUPONT 110
+BOURGOGNE
+POTIN 140
+BEAUJOLAIS
+DURAND
+elephant 90;
+/
+
+Commentaire
+###########
+ * Plusieurs fiches de livraison, avec un chauffeur apparaissant plusieurs fois.
+ * Capacités valides de citernes (dans l'intervalle 100-200).
+ * Livraison de plusieurs types de vins et plusieurs magasins.
+
+
+################################################## TEST 2 ##################################################
+
+Donnée à analyser
+#################
+
+MARTIN 100
+BOURGOGNE
+INTERMARCHE 60 CASINO 40;
+/
+
+Commentaire
+###########
+ * Livraison correcte avec un seul chauffeur et une seule qualité de vin.
+ * Capacité exacte de la citerne.
+ * Plusieurs magasins livrés.
+
+
+################################################## TEST 3 ##################################################
+
+Donnée à analyser
+#################
+
+ROBERT 120
+SUPERU 100 LEADERPRICE 50;
+/
+
+Commentaire
+###########
+ * La qualité du vin n'est pas spécifiée -> doit être considéré comme "ORDINAIRE".
+
+
+################################################## TEST 4 ##################################################
+
+Donnée à analyser
+#################
+
+PAUL 180
+BOURGOGNE
+LIDL 0;
+/
+
+Commentaire
+###########
+ * Erreur : volume livré nul.
+ * Doit être signalé et ignoré.
+
+
+################################################## TEST 5 ##################################################
+
+Donnée à analyser
+#################
+
+JEAN 130
+BEAUJOLAIS
+INTERMARCHE 200;
+/
+
+Commentaire
+###########
+ * Erreur : volume livré supérieur à la capacité de la citerne.
+ * Doit être signalé et ignoré.
+
+
+################################################## TEST 6 ##################################################
+
+Donnée à analyser
+#################
+
+DUPONT 90
+BOURGOGNE
+AUCHAN 50;
+/
+
+Commentaire
+###########
+ * Erreur : capacité de citerne inférieure à 100.
+ * Doit être forcée à 100.
+
+
+################################################## TEST 7 ##################################################
+
+Donnée à analyser
+#################
+
+CHAUFFEUR1 150
+BEAUJOLAIS
+MAG1 50, MAG2 50, MAG3 50, MAG4 50, MAG5 50, MAG6 50, MAG7 50, MAG8 50, MAG9 50, MAG10 50, MAG11 50;
+/
+
+Commentaire
+###########
+ * Erreur fatale : plus de 10 chauffeurs.
+ * Doit être signalé et l'analyse stoppée.
+
+
+################################################## TEST 8 ##################################################
+
+Donnée à analyser
+#################
+
+LEBLANC 120
+BEAUJOLAIS
+INTERMARCHE 60 CASINO 40,;
+/
+
+Commentaire
+###########
+ * Erreur de syntaxe : virgule mal placée.
+ * Doit être signalée et reprise de l'analyse à l'item suivant.
+
+
+################################################## TEST 9 ##################################################
+
+Donnée à analyser
+#################
+
+MARTIN
+BEAUJOLAIS
+INTERMARCHE 60 CASINO 40;
+/
+
+Commentaire
+###########
+ * Volume de citerne absent.
+ * Doit être forcé à 100.
+
+
+################################################## TEST 10 ##################################################
+
+Donnée à analyser
+#################
+
+DUPONT 150
+BOURGOGNE
+POTIN 50, VIEILLESGALERIES 40, ELEPHANT 10;
+/
+
+Commentaire
+###########
+ * Test standard avec plusieurs magasins livrés.
+ * Aucun problème prévu.
+
+
+################################################## TEST 11 ##################################################
+
+Donnée à analyser
+#################
+
+CHAUFFEUR1 120
+BOURGOGNE
+INTERMARCHE 50, CASINO 50;
+CHAUFFEUR2 140
+BEAUJOLAIS
+CARREFOUR 100, AUCHAN 100;
+/
+
+Commentaire
+###########
+ * Test avec plusieurs chauffeurs différents.
+ * Quantités valides et bien réparties.
+
+
+#######################################
+          FIN DU JEU DE TEST
+#######################################
+
+
+Jeu_De_Test.txt
+9 Ko

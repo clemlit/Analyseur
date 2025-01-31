@@ -155,6 +155,8 @@ public class ActVin extends AutoVin {
 	
 	private int volCiterne;
 	private int nbFicheActuel;
+	private int nbDeFicheCorrecte = 0 ;
+	private int quantite = 0;
 	
 
 	
@@ -202,10 +204,7 @@ public class ActVin extends AutoVin {
 			volCiterne = valEnt();
 			if(volCiterne > 200 || volCiterne < 100) {
 				numAct = 8;
-				chaufActuel = null;
-				qualiteActuel = 2;
-				volCiterne = 100;
-				volumeActuel = 0;
+                reset();
 				erreur(NONFATALE,"Le volume de la citerne n'est pas compris entre 100 et 200");
 			}
 			break;
@@ -225,8 +224,9 @@ public class ActVin extends AutoVin {
 		    break;
 		    
 		case 6: // Lecture de la quantité
-			volumeActuel = chaufActuel.bj + chaufActuel.bg + chaufActuel.ordin + valEnt();
-			if(volumeActuel <= volCiterne && valEnt() > 0){
+			quantite = valEnt();
+			volumeActuel = chaufActuel.bj + chaufActuel.bg + chaufActuel.ordin + quantite;
+			if(volumeActuel <= volCiterne && quantite > 0){
 				switch(qualiteActuel) {
 					case 0 :
 						chaufActuel.bj += valEnt();
@@ -241,29 +241,25 @@ public class ActVin extends AutoVin {
 					default :
 				break;
 				}
-			}else {
-				if(volumeActuel == 0) {
-					numAct = 8;
-					chaufActuel = null;
-					qualiteActuel = 2;
-					volCiterne = 100;
-					volumeActuel = 0;
-					erreur(NONFATALE, "Quantité livrée ne doit pas être nulle");
-				}
-				else if(volumeActuel > volCiterne) {
-					numAct = 8;
-					chaufActuel = null;
-					qualiteActuel = 2;
-					volCiterne = 100;
-					volumeActuel = 0;
-					erreur(NONFATALE, "QUantité livrée ne doit pas être supérieure au vol. citerne");
-				}
+			}else if(quantite == 0) {
 				numAct = 8;
-				chaufActuel = null;
-				qualiteActuel = 2;
-				volCiterne = 100;
-				volumeActuel = 0;
-				erreur(NONFATALE,"Le volume de la citerne va être dépassé");
+				chaufActuel.magDif.clear();
+		        reset();
+				erreur(NONFATALE, "Quantité livrée ne doit pas être nulle");
+			}
+			else if(quantite > volCiterne) {
+				numAct = 8;
+				chaufActuel.magDif.clear();
+	            reset();
+	            erreur(NONFATALE, "Quantité livrée ne doit pas être supérieure au vol. citerne");
+			}else if(volumeActuel > volCiterne){
+				numAct = 8;
+				chaufActuel.bj = 0;
+		        chaufActuel.bg = 0;
+		        chaufActuel.ordin = 0;
+		        chaufActuel.magDif.clear();
+                reset();
+                erreur(NONFATALE,"Le volume de la citerne va être dépassé");
 			}
 		break;
 			
@@ -274,10 +270,8 @@ public class ActVin extends AutoVin {
 		case 8: // Lecture du ';'
 			Ecriture.ecrireStringln("Fin de la fiche " + nbFicheActuel);
 			afficherChauf();
-			chaufActuel = null;
-			qualiteActuel = 2;
-			volCiterne = 100;
-			volumeActuel = 0;
+			reset();
+			nbDeFicheCorrecte++;
 			break;
 			
 		case 9: // Lecture de la '/'
@@ -290,18 +284,25 @@ public class ActVin extends AutoVin {
 					chaufMax = tabChauf[i];
 					idChaufCourant = ((LexVin)analyseurLexical).chaineIdent(chaufMax.numChauf);
 				}
-			}			
+			}		
+			Ecriture.ecrireStringln("Le chauffeur ayant livré le plus de magasins différents est " + idChaufCourant);
+			Ecriture.ecrireStringln("Le nombre total de fiches traités est " + nbFicheActuel);
+			Ecriture.ecrireStringln("Le nombre de fiches  correctes parmi ces fiches traités est " + (nbDeFicheCorrecte));
 			break;
 			
 		default:
 			numAct = 8;
-			chaufActuel = null;
-			qualiteActuel = 2;
-			volCiterne = 100;
-			volumeActuel = 0;
+			chaufActuel.magDif.clear();
+            reset();
 			erreur(NONFATALE,"action " + numAct + " non prevue");
 			
 		}
 	} 
+	
+	private void reset() {
+        qualiteActuel = 2;
+        volCiterne = 100;
+        volumeActuel = 0;
+	}
 
 } 

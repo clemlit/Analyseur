@@ -248,7 +248,6 @@ public class ActVin extends AutoVin {
 			afficherChauf();
 			chaufActuel = null;
 			qualiteActuel = 2;
-			nbDeFicheCorrecte++;
 			volCiterne = 100;
 			volumeActuel = 0;
 			break;

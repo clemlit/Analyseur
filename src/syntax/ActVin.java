@@ -235,7 +235,7 @@ public class ActVin extends AutoVin {
 				break;
 				}
 			}else {
-				erreur(NONFATALE,"Le volume de la citerne va être dépasser");
+				erreur(NONFATALE,"Le volume de la citerne va être dépassé");
 				while(numAct != 8 || numAct != 9);
 			}
 		break;

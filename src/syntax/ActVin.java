@@ -199,7 +199,11 @@ public class ActVin extends AutoVin {
 			break;
 			
 		case 2: // Lecture du Volume de la citerne
-			volCiterne = valEnt();
+			if(valEnt() > 200 || valEnt() < 100) {
+				volCiterne = valEnt();
+			}else {
+				erreur(NONFATALE,"Le volume de la citerne n'est pas compris entre 100 et 200");
+			}
 			break;
 		
 		case 3: // Qualité = BEAUJOLAIS
@@ -218,7 +222,7 @@ public class ActVin extends AutoVin {
 		    
 		case 6: // Lecture de la quantité
 			volumeActuel = chaufActuel.bj + chaufActuel.bg + chaufActuel.ordin + valEnt();
-			if(volumeActuel <= volCiterne) {
+			if(volumeActuel <= volCiterne && valEnt() > 0){
 				switch(qualiteActuel) {
 					case 0 :
 						chaufActuel.bj += valEnt();
@@ -234,7 +238,7 @@ public class ActVin extends AutoVin {
 				break;
 				}
 			}else {
-				erreur(NONFATALE,"Le volume de la citerne va être dépassé");
+				System.out.println("Le volume de la citerne va être dépassé");
 				while(numAct != 8 || numAct != 9);
 			}
 		break;

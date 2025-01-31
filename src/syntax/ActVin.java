@@ -199,9 +199,8 @@ public class ActVin extends AutoVin {
 			break;
 			
 		case 2: // Lecture du Volume de la citerne
-			if(valEnt() > 200 || valEnt() < 100) {
-				volCiterne = valEnt();
-			}else {
+			volCiterne = valEnt();
+			if(volCiterne > 200 || volCiterne < 100) {
 				numAct = 8;
 				chaufActuel = null;
 				qualiteActuel = 2;
@@ -249,7 +248,6 @@ public class ActVin extends AutoVin {
 				volCiterne = 100;
 				volumeActuel = 0;
 				erreur(NONFATALE,"Le volume de la citerne va être dépassé");
-				while(numAct != 8 || numAct != 9);
 			}
 		break;
 			
@@ -280,8 +278,12 @@ public class ActVin extends AutoVin {
 			break;
 			
 		default:
+			numAct = 8;
+			chaufActuel = null;
+			qualiteActuel = 2;
+			volCiterne = 100;
+			volumeActuel = 0;
 			erreur(NONFATALE,"action " + numAct + " non prevue");
-			while(numAct != 8 || numAct != 9);
 			
 		}
 	} 
